@@ -13,5 +13,25 @@ class Review(core_models.TimeStampedModel):
     accuracy = models.IntegerField()
     cleanliness = models.IntegerField()
     value = models.IntegerField()
-    user = models.ForeignKey("users.User", on_delete=models.CASCADE)
-    room = models.ForeignKey("rooms.Room", on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        "users.User", related_name="reviews", on_delete=models.CASCADE
+    )
+    room = models.ForeignKey(
+        "rooms.Room", related_name="reviews", on_delete=models.CASCADE, null=True
+    )
+
+    def __str__(self):
+        return f"{self.review} : {self.room}"
+
+    def rating_average(self):
+        avg = (
+            self.location
+            + self.communication
+            + self.check_in
+            + self.accuracy
+            + self.cleanliness
+            + self.value
+        ) / 6
+        return round(avg, 1)
+
+    rating_average.short_description = "Avg."
