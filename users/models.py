@@ -29,7 +29,7 @@ class User(AbstractUser):
     bio = models.TextField(default="", blank=True)
     gender = models.CharField(max_length=10, choices=GENDER_CHOICES, blank=True)
     birthdate = models.DateField(null=True, blank=True)
-    avatar = models.ImageField(blank=True)
+    avatar = models.ImageField(blank=True, upload_to="avatar_pics")
     currency = models.CharField(max_length=3, choices=CURRENCY_CHOICES, blank=True)
     language = models.CharField(max_length=7, choices=LANGUAGE_CHOICES, blank=True)
     superhost = models.BooleanField(default=False)
